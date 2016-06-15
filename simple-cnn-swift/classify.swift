@@ -126,6 +126,21 @@ func forward(image : [Float], image_shape : [Int], net : Array<(String, String)>
         
         }
         
+        if type == "BatchNorm" {
+            let params : BatchNorm_params! = net_params[name] as! BatchNorm_params
+            let E : [Float]! = params.E
+            let V : [Float]! = params.V
+            let scale : [Float]! = params.scale
+
+            var output : [Float]!
+            output = batch_normalization(input_data, _in_dimension: input_shape, E: E, V: V, scale: scale)
+            
+            print("<-- \(input_shape)")
+            input_data = output
+            print("--> \(input_shape)")
+        
+        }
+        
         if type == "SoftmaxWithLoss" {
             print("<-- \(input_shape)")
             print(input_data)

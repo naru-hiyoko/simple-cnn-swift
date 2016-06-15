@@ -94,6 +94,21 @@ class InnerProduct_params {
     var bias : [Float]!
 }
 
+class BatchNorm_params {
+    var num_output : Int!
+    var E : [Float]!
+    var V : [Float]!
+    var scale : [Float]!
+    var gamma : Float?
+    var beta : Float?
+    
+    init() {
+        self.gamma = 1.0
+        self.beta = 0.0
+    }
+    
+}
+
 
 func load_net(filename: String) -> (Array<(String, String)>, Dictionary<String, AnyObject>, [Float]?){
     
@@ -124,6 +139,24 @@ func load_net(filename: String) -> (Array<(String, String)>, Dictionary<String, 
         
         if layer_type == "Dropout" {
             //print(layer)
+        }
+        
+        if layer_type == "BatchNorm" {
+            
+        
+            let blobs = layer["blobs"]!
+            let E = blobs[0]["data"]! as! [Float]
+            let V = blobs[1]["data"]! as! [Float]
+            let scale = blobs[2]["data"] as! [Float]
+            
+            let cl : BatchNorm_params! = BatchNorm_params()
+            cl.E = E
+            cl.V = V
+            cl.scale = scale
+            
+            net_params[layer_name] = cl
+            
+            
         }
         
         if layer_type == "Convolution" {

@@ -38,13 +38,13 @@ var input_shape = [1, 3, 32, 32]
 
 
 // 画像を読み込む
-let test_image : NSImage! = NSImage(contentsOfFile: "track1.jpg")
+let test_image : NSImage! = NSImage(contentsOfFile: "/Volumes/ramdisk/workspace/simple-cnn-swift/deer.jpg")
 test_image.size = NSSize(width: 32, height: 32)
 var input_data = im2array(test_image, scale: 255.0)
 
 // ネットワークの読み込み
 let label = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "track"]
-let (net, net_params, mean) = load_net("cifar10_quick_iter_4000.json")
+let (net, net_params, mean) = load_net("/Volumes/ramdisk/workspace/simple-cnn-swift/cifar10_quick_iter_5000.json")
 
 
 // 平均画像を入力画像に適用する

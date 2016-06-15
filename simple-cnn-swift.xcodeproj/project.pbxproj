@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4374E1971D11BAB700BB0894 /* batch_normalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4374E1961D11BAB700BB0894 /* batch_normalization.swift */; };
 		437F6C391CC2B0E2007CA82F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437F6C381CC2B0E2007CA82F /* main.swift */; };
 		437F6C431CC2B11C007CA82F /* classify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437F6C3F1CC2B11C007CA82F /* classify.swift */; };
 		437F6C441CC2B11C007CA82F /* conv_layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437F6C401CC2B11C007CA82F /* conv_layer.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4374E1961D11BAB700BB0894 /* batch_normalization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = batch_normalization.swift; sourceTree = "<group>"; };
 		437F6C351CC2B0E2007CA82F /* simple-cnn-swift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "simple-cnn-swift"; sourceTree = BUILT_PRODUCTS_DIR; };
 		437F6C381CC2B0E2007CA82F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		437F6C3F1CC2B11C007CA82F /* classify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = classify.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				437F6C381CC2B0E2007CA82F /* main.swift */,
+				4374E1961D11BAB700BB0894 /* batch_normalization.swift */,
 				437F6C3F1CC2B11C007CA82F /* classify.swift */,
 				437F6C401CC2B11C007CA82F /* conv_layer.swift */,
 				437F6C411CC2B11C007CA82F /* im2col.swift */,
@@ -162,6 +165,7 @@
 				437F6C451CC2B11C007CA82F /* im2col.swift in Sources */,
 				437F6C391CC2B0E2007CA82F /* main.swift in Sources */,
 				437F6C4C1CC2B126007CA82F /* util.swift in Sources */,
+				4374E1971D11BAB700BB0894 /* batch_normalization.swift in Sources */,
 				437F6C4B1CC2B126007CA82F /* relu_layer.swift in Sources */,
 				437F6C431CC2B11C007CA82F /* classify.swift in Sources */,
 				437F6C4A1CC2B126007CA82F /* pooling_layer.swift in Sources */,
