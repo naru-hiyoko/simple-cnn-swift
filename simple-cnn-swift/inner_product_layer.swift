@@ -9,15 +9,15 @@
 import Foundation
 
 
-func inner_product(input: [Float], weights: [Float], weights_shape: [Int], bias: [Float]) -> [Float] 
+func inner_product(_ input: [Float], weights: [Float], weights_shape: [Int], bias: [Float]) -> [Float] 
 {
-    var output: [Float] = [Float](count: weights_shape[0], repeatedValue: 0.0)
+    var output: [Float] = [Float](repeating: 0.0, count: weights_shape[0])
     let num_output = weights_shape[0]
     
-    let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+    //let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high)
     
     
-    dispatch_apply(num_output, queue, { (c) in 
+    DispatchQueue.concurrentPerform(iterations: num_output, execute: { (c) in 
         output[c] = bias[c]
         for i in 0..<weights_shape[1] {
             output[c] += input[i] * weights[weights_shape[1] * c + i]
@@ -33,9 +33,9 @@ func inner_product(input: [Float], weights: [Float], weights_shape: [Int], bias:
 // weights_shape[0] .. n of top data
 // weights_shape[1] .. n of bottom data
 
-func inner_product_backward(input: [Float], weights: [Float], weights_shape: [Int]) -> [Float]
+func inner_product_backward(_ input: [Float], weights: [Float], weights_shape: [Int]) -> [Float]
 {
-    var output: [Float] = [Float](count: weights_shape[1], repeatedValue: 0.0)
+    var output: [Float] = [Float](repeating: 0.0, count: weights_shape[1])
     for c in 0..<weights_shape[0] {
         for i in 0..<weights_shape[1] {
             output[i] += input[c] * weights[weights_shape[1] * c + i]

@@ -17,7 +17,7 @@ class convolution
 
      **/
 
-    static func forward_cpu(input: [Float], weights: [Float], bias: [Float], col_dimension: [Int], output_dimension: [Int]) -> [Float]
+    static func forward_cpu(_ input: [Float], weights: [Float], bias: [Float], col_dimension: [Int], output_dimension: [Int]) -> [Float]
     {   
         let channels_col = col_dimension[1]
         //let height_col = col_dimension[2]    
@@ -27,10 +27,10 @@ class convolution
         let height_out = output_dimension[2]
         let width_out = output_dimension[3]
     
-        var result : [Float] = [Float](count: Int(channels_out * height_out * width_out), repeatedValue: 0.0)
+        var result : [Float] = [Float](repeating: 0.0, count: Int(channels_out * height_out * width_out))
 
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-        dispatch_apply(Int(channels_out * height_out * width_out), queue, { (id) in 
+        let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high)
+        DispatchQueue.concurrentPerform(iterations: Int(channels_out * height_out * width_out), execute: { (id) in 
             let a = (id / (height_out * width_out)) % channels_out
             let b = id % Int(height_out * width_out)
         

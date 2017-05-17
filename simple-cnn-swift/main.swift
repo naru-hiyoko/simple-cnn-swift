@@ -6,24 +6,24 @@
 import Foundation
 import Cocoa
 
-// for osx
-func im2array(image: NSImage, scale: Float) -> [Float]
+// for macOS
+func im2array(_ image: NSImage, scale: Float) -> [Float]
 {
     var channel_red : Array<Float> = []
     var channel_blue : Array<Float> = []
     var channel_green : Array<Float> = []    
     
-    let size = image.size    
+    let size = image.size
     
-    let bmap : NSBitmapImageRep! = NSBitmapImageRep(data: image.TIFFRepresentation!)
+    let bmap : NSBitmapImageRep! = NSBitmapImageRep(data: image.tiffRepresentation!)
     bmap.size = size
     let width = Int(size.width) 
     
     for h in 0..<Int(size.height) {
         for w in 0..<Int(size.width) {
-            channel_green.append(Float(bmap.colorAtX(width - w - 1, y: h)!.greenComponent) * scale)
-            channel_red.append(Float(bmap.colorAtX(width - w - 1, y: h)!.redComponent) * scale)
-            channel_blue.append(Float(bmap.colorAtX(width - w - 1, y: h)!.blueComponent) * scale)
+            channel_green.append(Float(bmap.colorAt(x: width - w - 1, y: h)!.greenComponent) * scale)
+            channel_red.append(Float(bmap.colorAt(x: width - w - 1, y: h)!.redComponent) * scale)
+            channel_blue.append(Float(bmap.colorAt(x: width - w - 1, y: h)!.blueComponent) * scale)
         }
     }
     
@@ -36,15 +36,14 @@ func im2array(image: NSImage, scale: Float) -> [Float]
 //入力サイズ
 var input_shape = [1, 3, 32, 32]
 
-
 // 画像を読み込む
-let test_image : NSImage! = NSImage(contentsOfFile: "/Volumes/ramdisk/workspace/simple-cnn-swift/deer.jpg")
+let test_image : NSImage! = NSImage(contentsOfFile: "/Users/zennychen/Desktop/simple-cnn-swift-master/deer.jpg")
 test_image.size = NSSize(width: 32, height: 32)
 var input_data = im2array(test_image, scale: 255.0)
 
 // ネットワークの読み込み
 let label = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "track"]
-let (net, net_params, mean) = load_net("/Volumes/ramdisk/workspace/simple-cnn-swift/cifar10_quick_iter_5000.json")
+let (net, net_params, mean) = load_net("/Users/zennychen/Desktop/simple-cnn-swift-master/cifar10_quick_iter_5000.json")
 
 
 // 平均画像を入力画像に適用する
@@ -53,10 +52,10 @@ if mean != nil {
 }
 
 
-let st = NSDate()
+let st = Date()
 let softmax_val : [Float]! = forward(input_data, image_shape: input_shape, net: net, net_params: net_params)
-let end = NSDate().timeIntervalSinceDate(st)
-print("pred : \(label[softmax_val!.indexOf(softmax_val.maxElement()!)!])")
+let end = Date().timeIntervalSince(st)
+print("pred : \(label[softmax_val!.index(of: softmax_val.max()!)!])")
 print("forward time : \(end)")
 
 

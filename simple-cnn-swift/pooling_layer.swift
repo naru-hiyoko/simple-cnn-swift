@@ -17,11 +17,11 @@ import Foundation
 
 
 enum POOL {
-    case MAX
-    case AVG
+    case max
+    case avg
 }
 
-func im2colForPool(input: [Float], input_shape: [Int], kernel_size: Int, stride: Int, pad: Int) -> [Float] 
+func im2colForPool(_ input: [Float], input_shape: [Int], kernel_size: Int, stride: Int, pad: Int) -> [Float] 
 {
     
     let a = 2 * Float(pad) - Float(kernel_size)
@@ -30,7 +30,7 @@ func im2colForPool(input: [Float], input_shape: [Int], kernel_size: Int, stride:
     
     // create output buffer
     let im2colCount = Int(input_shape[1]) * height_col * width_col * kernel_size * kernel_size
-    var _in_data_col : [Float] = [Float](count: im2colCount, repeatedValue: 0.0)
+    var _in_data_col : [Float] = [Float](repeating: 0.0, count: im2colCount)
     
     
     let k2 = kernel_size * kernel_size
@@ -65,7 +65,7 @@ func im2colForPool(input: [Float], input_shape: [Int], kernel_size: Int, stride:
 }
 
 
-func max_pool(input: [Float], input_shape: [Int], kernel_size : Int,  stride : Int, pad: Int) -> [Float]
+func max_pool(_ input: [Float], input_shape: [Int], kernel_size : Int,  stride : Int, pad: Int) -> [Float]
 {
     
     let input_data = im2colForPool(input, input_shape: input_shape, kernel_size: kernel_size, stride: stride, pad: pad)
@@ -77,13 +77,13 @@ func max_pool(input: [Float], input_shape: [Int], kernel_size : Int,  stride : I
     let height_col = Int(ceil( (Float(height) + 2 * Float(pad) - Float(kernel_size)) / Float(stride) + 1.0 ))
     let width_col = Int(ceil( (Float(width) + 2 * Float(pad) - Float(kernel_size)) / Float(stride) + 1.0))
     
-    var result = [Float](count: channels * height_col * width_col, repeatedValue: 0.0)
+    var result = [Float](repeating: 0.0, count: channels * height_col * width_col)
     
     let k2 = kernel_size * kernel_size
     
-    let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+    let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high)
     
-    dispatch_apply(channels, queue, { (id) in 
+    DispatchQueue.concurrentPerform(iterations: channels, execute: { (id) in 
         
         let c_im = width_col * height_col * id
         
@@ -105,7 +105,7 @@ func max_pool(input: [Float], input_shape: [Int], kernel_size : Int,  stride : I
 }
 
 
-func avg_pool(input: [Float], input_shape: [Int], kernel_size : Int, stride : Int, pad : Int) -> [Float]
+func avg_pool(_ input: [Float], input_shape: [Int], kernel_size : Int, stride : Int, pad : Int) -> [Float]
 {
 
     
@@ -118,13 +118,13 @@ func avg_pool(input: [Float], input_shape: [Int], kernel_size : Int, stride : In
     let height_col = Int(ceil( (Float(height) + 2 * Float(pad) - Float(kernel_size)) / Float(stride) + 1.0 ))
     let width_col = Int(ceil( (Float(width) + 2 * Float(pad) - Float(kernel_size)) / Float(stride) + 1.0))
     
-    var result = [Float](count: channels * height_col * width_col, repeatedValue: 0.0)
+    var result = [Float](repeating: 0.0, count: channels * height_col * width_col)
     
     let k2 = kernel_size * kernel_size
     
-    let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+    let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high)
     
-    dispatch_apply(channels, queue, { (id) in
+    DispatchQueue.concurrentPerform(iterations: channels, execute: { (id) in
         let c_im = width_col * height_col * id
         
         for n in 0..<width_col * height_col {

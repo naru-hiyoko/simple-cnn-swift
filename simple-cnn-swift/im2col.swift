@@ -13,7 +13,7 @@ import Darwin
 called before convolution layer
 **/
 
-func col2im(data_col: [Float], input_dimension : [Int] , 
+func col2im(_ data_col: [Float], input_dimension : [Int] , 
     patch_size : Int, stride: Int, pad: Int) -> [Float] {
         let channels : Int = input_dimension[1]
         let height : Int = input_dimension[2]
@@ -23,7 +23,7 @@ func col2im(data_col: [Float], input_dimension : [Int] ,
         let width_col = Int(ceil( (Float(width) + 2 * Float(pad) - Float(patch_size)) / Float(stride) + 1.0))
         let channels_col = channels * patch_size * patch_size
         
-        var data_im = [Float](count: channels*width*height, repeatedValue: 0.0)
+        var data_im = [Float](repeating: 0.0, count: channels*width*height)
   
         
         for h in 0..<height_col {
@@ -47,7 +47,7 @@ func col2im(data_col: [Float], input_dimension : [Int] ,
         return data_im
 }
 
-func im2col(data_im : [Float], input_dimension: [Int], col_dimension: [Int], kernel_size: Int, stride: Int, pad: Int) -> [Float] {
+func im2col(_ data_im : [Float], input_dimension: [Int], col_dimension: [Int], kernel_size: Int, stride: Int, pad: Int) -> [Float] {
         
 
     //let channels: Int = input_dimension[1]
@@ -57,7 +57,7 @@ func im2col(data_im : [Float], input_dimension: [Int], col_dimension: [Int], ker
     let channels_col = col_dimension[1]
     let height_col = col_dimension[2]
     let width_col = col_dimension[3]
-    var data_col = [Float](count: channels_col * height_col * width_col, repeatedValue: 0.0) 
+    var data_col = [Float](repeating: 0.0, count: channels_col * height_col * width_col) 
     
     for h in 0..<height_col {
         for w in 0..<width_col {
