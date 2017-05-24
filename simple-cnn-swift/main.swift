@@ -6,12 +6,12 @@
 import Foundation
 import Cocoa
 
-// for macOS
-func im2array(_ image: NSImage, scale: Float) -> [Float]
+/// for macOS
+func image2array(_ image: NSImage, scale: Float) -> [Float]
 {
-    var channel_red : Array<Float> = []
-    var channel_blue : Array<Float> = []
-    var channel_green : Array<Float> = []    
+    var channel_red = [Float]()
+    var channel_blue = [Float]()
+    var channel_green = [Float]()
     
     let size = image.size
     
@@ -39,7 +39,7 @@ var input_shape = [1, 3, 32, 32]
 // 画像を読み込む
 let test_image : NSImage! = NSImage(contentsOfFile: "/Users/zennychen/Desktop/simple-cnn-swift-master/deer.jpg")
 test_image.size = NSSize(width: 32, height: 32)
-var input_data = im2array(test_image, scale: 255.0)
+var input_data = image2array(test_image, scale: 255.0)
 
 // ネットワークの読み込み
 let label = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "track"]

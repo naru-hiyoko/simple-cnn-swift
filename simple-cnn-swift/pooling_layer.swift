@@ -81,8 +81,6 @@ func max_pool(_ input: [Float], input_shape: [Int], kernel_size : Int,  stride :
     
     let k2 = kernel_size * kernel_size
     
-    let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high)
-    
     DispatchQueue.concurrentPerform(iterations: channels, execute: { (id) in 
         
         let c_im = width_col * height_col * id
@@ -99,7 +97,6 @@ func max_pool(_ input: [Float], input_shape: [Int], kernel_size : Int,  stride :
         }
         
     })
-    
     
     return result
 }
@@ -121,8 +118,6 @@ func avg_pool(_ input: [Float], input_shape: [Int], kernel_size : Int, stride : 
     var result = [Float](repeating: 0.0, count: channels * height_col * width_col)
     
     let k2 = kernel_size * kernel_size
-    
-    let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high)
     
     DispatchQueue.concurrentPerform(iterations: channels, execute: { (id) in
         let c_im = width_col * height_col * id

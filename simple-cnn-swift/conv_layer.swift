@@ -29,7 +29,6 @@ class convolution
     
         var result : [Float] = [Float](repeating: 0.0, count: Int(channels_out * height_out * width_out))
 
-        let queue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.high)
         DispatchQueue.concurrentPerform(iterations: Int(channels_out * height_out * width_out), execute: { (id) in 
             let a = (id / (height_out * width_out)) % channels_out
             let b = id % Int(height_out * width_out)
@@ -43,6 +42,4 @@ class convolution
     
         return result
     }
-    
- 
 }
