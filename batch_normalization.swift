@@ -23,12 +23,13 @@ func batch_normalization(_ _in : [Float], _in_dimension : [Int], E : [Float], V 
                 let id : Int = (height * width) * n + width * h + w
                 let _e = E[n] / scale[0]
                 let _v = V[n] / scale[0]
-                var tmp = _in[id] * gamma / sqrt(_v + 0.00001)
-                tmp += beta - gamma * _e / sqrt(_v + 0.00001)
+                let t = _in[id] * gamma / sqrt(_v + 0.00001)
+                let tmp = t + (beta - gamma * _e / sqrt(_v + 0.00001))
                 result[id] = tmp
                 
             }
         }
     }
     return result
+    
 }
